@@ -15,16 +15,7 @@ const displayName = computed(() => {
   }
   return `${data.name} ${data.lastName}`
 })
-const formattedPhone = computed(() => {
-  let phone = data.tel
-  if (!phone.startsWith('+48')) {
-    phone = `+48${phone}`
-  }
 
-  return phone.replace(/\s/g, '').replace(/-/g, '')
-})
-
-// copy to clipboard with styles from div of id="mail-footer"
 const copyToClipboard = () => {
   const mailFooter = document.getElementById('mail-footer')
   if (mailFooter) {
@@ -56,10 +47,6 @@ const copyToClipboard = () => {
     <input v-model="data.position" />
   </label>
   <label class="label">
-    <span>Telefon </span>
-    <input v-model="data.tel" type="tel" />
-  </label>
-  <label class="label">
     <span>Email </span>
     <input v-model="data.email" type="email" />
   </label>
@@ -68,26 +55,22 @@ const copyToClipboard = () => {
   <hr />
 
   <div id="mail-footer" style="font-family: sans-serif; font-size: small">
-    <p>Pozdrawiam</p>
     <span style="font-weight: 700">{{ displayName }}</span
     ><br />
     <span style="font-style: italic">{{ data.position }}</span
-    ><br />
-    tel:
-    <a :href="`tel:${formattedPhone}`">{{ data.tel }}</a
-    ><br />
+    ><br /><br />
     email: <a :href="`mailto:${data.email}`">{{ data.email }}</a
     ><br />
-    <br />
-    <img
-      src="https://github.com/nidomika/mail-footer-generator/assets/34137726/f530254a-845a-4660-8ea7-60cdbd53e3bb"
-      width="220"
-      height="100"
-      style="background-color: white"
-      alt=""
-    /><br />
-    Cech Fantastyki "SkierCon"<br />
     <a href="https://skiercon.pl">https://skiercon.pl/</a><br />
+    <a href="https://skiercon.pl">
+      <img
+        src="https://github.com/nidomika/mail-footer-generator/assets/34137726/f530254a-845a-4660-8ea7-60cdbd53e3bb"
+        width="220"
+        height="100"
+        style="background-color: white"
+        alt=""
+      />
+    </a>
     <div id="social" style="padding-top: 10px">
       <a
         href="https://www.facebook.com/SkierCon/"
