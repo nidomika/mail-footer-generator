@@ -1,42 +1,42 @@
 <script setup lang="ts">
-import { computed, reactive } from 'vue'
+  import { computed, reactive } from 'vue'
 
-const data = reactive({
-  name: 'Imię',
-  nick: '',
-  lastName: 'Nazwisko',
-  position: 'Stanowisko ds. Stanowiska',
-  email: 'shrek@bagno.com',
-})
+  const data = reactive({
+    name: 'Imię',
+    nick: '',
+    lastName: 'Nazwisko',
+    position: 'Stanowisko ds. Stanowiska',
+    email: 'shrek@bagno.com'
+  })
 
-const displayName = computed(() => {
-  if (data.nick) {
-    return `${data.name} "${data.nick}" ${data.lastName}`
+  const displayName = computed(() => {
+    if (data.nick) {
+      return `${data.name} "${data.nick}" ${data.lastName}`
+    }
+    return `${data.name} ${data.lastName}`
+  })
+
+  const copyToClipboard = () => {
+    const mailFooter = document.getElementById('mail-footer')
+    if (mailFooter) {
+      const range = document.createRange()
+      range.selectNode(mailFooter)
+      window.getSelection()?.removeAllRanges()
+      window.getSelection()?.addRange(range)
+      document.execCommand('copy')
+      window.getSelection()?.removeAllRanges()
+    }
   }
-  return `${data.name} ${data.lastName}`
-})
 
-const copyToClipboard = () => {
-  const mailFooter = document.getElementById('mail-footer')
-  if (mailFooter) {
-    const range = document.createRange()
-    range.selectNode(mailFooter)
-    window.getSelection()?.removeAllRanges()
-    window.getSelection()?.addRange(range)
-    document.execCommand('copy')
-    window.getSelection()?.removeAllRanges()
+  const copied = () => {
+    const button = document.getElementById('copy-button')
+    if (button) {
+      button.textContent = 'Skopiowano'
+      setTimeout(() => {
+        button.textContent = 'Kopiuj'
+      }, 2000)
+    }
   }
-}
-
-const copied = () => {
-  const button = document.getElementById('copy-button')
-  if (button) {
-    button.textContent = 'Skopiowano'
-    setTimeout(() => {
-      button.textContent = 'Kopiuj'
-    }, 2000)
-  }
-}
 </script>
 
 <template>
@@ -110,7 +110,7 @@ const copied = () => {
         <a href="https://skiercon.pl">https://skiercon.pl/</a><br />
         <a href="https://skiercon.pl">
           <img
-            src="https://github.com/nidomika/mail-footer-generator/assets/34137726/f530254a-845a-4660-8ea7-60cdbd53e3bb"
+            src="https://github.com/user-attachments/assets/e5e7a304-4133-4b42-8485-1df991e2e521"
             width="220"
             height="100"
             style="background-color: white"
@@ -196,45 +196,45 @@ const copied = () => {
 </template>
 
 <style>
-.wrapper {
-  width: 50em;
-  @media screen and (max-width: 50em) {
+  .wrapper {
+    width: 50em;
+    @media screen and (max-width: 50em) {
+      width: 100%;
+    }
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 1em;
+    @media screen and (max-width: 50em) {
+      display: block;
+    }
+  }
+
+  .pure-control-group {
+    margin: 0.5em 0;
+  }
+
+  input {
     width: 100%;
   }
-}
 
-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 0 1em;
-  @media screen and (max-width: 50em) {
-    display: block;
+  hr {
+    margin: 1em 0;
   }
-}
 
-.pure-control-group {
-  margin: 0.5em 0;
-}
+  .button-large {
+    font-size: 110%;
+  }
 
-input {
-  width: 100%;
-}
-
-hr {
-  margin: 1em 0;
-}
-
-.button-large {
-  font-size: 110%;
-}
-
-.button-success {
-  color: white;
-  border-radius: 4px;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-  background: rgb(8, 171, 46);
-  width: 100%;
-}
+  .button-success {
+    color: white;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    background: rgb(8, 171, 46);
+    width: 100%;
+  }
 </style>
