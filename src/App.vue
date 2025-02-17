@@ -1,48 +1,62 @@
 <script setup lang="ts">
-  import { computed, reactive } from 'vue'
+import { computed, reactive, ref } from 'vue'
 
-  const data = reactive({
-    name: 'Imię',
-    nick: '',
-    lastName: 'Nazwisko',
-    position: 'Stanowisko ds. Stanowiska',
-    email: 'shrek@bagno.com'
-  })
+const data = reactive({
+  name: 'Imię',
+  nick: '',
+  lastName: 'Nazwisko',
+  position: 'Stanowisko ds. Stanowiska',
+  email: 'shrek@bagno.com',
+})
 
-  const displayName = computed(() => {
-    if (data.nick) {
-      return `${data.name} "${data.nick}" ${data.lastName}`
-    }
-    return `${data.name} ${data.lastName}`
-  })
-
-  const copyToClipboard = () => {
-    const mailFooter = document.getElementById('mail-footer')
-    if (mailFooter) {
-      const range = document.createRange()
-      range.selectNode(mailFooter)
-      window.getSelection()?.removeAllRanges()
-      window.getSelection()?.addRange(range)
-      document.execCommand('copy')
-      window.getSelection()?.removeAllRanges()
-    }
+const displayName = computed(() => {
+  if (data.nick) {
+    return `${data.name} "${data.nick}" ${data.lastName}`
   }
+  return `${data.name} ${data.lastName}`
+})
 
-  const copied = () => {
-    const button = document.getElementById('copy-button')
-    if (button) {
-      button.textContent = 'Skopiowano'
-      setTimeout(() => {
-        button.textContent = 'Kopiuj'
-      }, 2000)
-    }
+const copyToClipboard = () => {
+  const mailFooter = document.getElementById('mail-footer')
+  if (mailFooter) {
+    const range = document.createRange()
+    range.selectNode(mailFooter)
+    window.getSelection()?.removeAllRanges()
+    window.getSelection()?.addRange(range)
+    document.execCommand('copy')
+    window.getSelection()?.removeAllRanges()
   }
+}
+
+const copied = () => {
+  const button = document.getElementById('copy-button')
+  if (button) {
+    button.textContent = 'Skopiowano'
+    setTimeout(() => {
+      button.textContent = 'Kopiuj'
+    }, 2000)
+  }
+}
+
+const isCech = ref(false)
+const websiteURL = computed(() =>
+  isCech.value ? 'https://cech.skiercon.pl/' : 'https://skiercon.pl'
+)
 </script>
 
 <template>
   <div class="wrapper">
     <div class="main">
-      <h2>generator stopek</h2>
+      <h2>
+        Generator stopek mailowych {{ isCech ? 'cechowych' : 'konwentowych' }}
+      </h2>
+      <button class="button-secondary pure-button" @click="isCech = !isCech">
+        {{
+          isCech
+            ? 'Zmień na konwentowy generator'
+            : 'Zmień na cechowy generator'
+        }}
+      </button>
       <form class="pure-form pure-form-stacked">
         <fieldset>
           <div class="pure-control-group">
@@ -107,19 +121,27 @@
         ><br /><br />
         email: <a :href="`mailto:${data.email}`">{{ data.email }}</a
         ><br />
-        <a href="https://skiercon.pl">https://skiercon.pl/</a><br />
-        <a href="https://skiercon.pl">
+        <a :href="websiteURL"> {{ websiteURL }}</a
+        ><br />
+        <a :href="websiteURL">
           <img
-            src="https://github.com/user-attachments/assets/e5e7a304-4133-4b42-8485-1df991e2e521"
+            :src="
+              isCech
+                ? 'https://github.com/user-attachments/assets/96bbf802-b14a-405c-9aa5-e66f7822d10e'
+                : 'https://github.com/user-attachments/assets/e5e7a304-4133-4b42-8485-1df991e2e521'
+            "
             width="220"
-            height="100"
             style="background-color: white"
             alt=""
           />
         </a>
         <div id="social" style="padding-top: 10px">
           <a
-            href="https://www.facebook.com/SkierCon/"
+            :href="
+              isCech
+                ? 'https://www.facebook.com/cech.fantastyki.skiercon'
+                : 'https://www.facebook.com/SkierCon/'
+            "
             style="
               display: inline-block;
               background-color: grey;
@@ -196,45 +218,51 @@
 </template>
 
 <style>
-  .wrapper {
-    width: 50em;
-    @media screen and (max-width: 50em) {
-      width: 100%;
-    }
-  }
-
-  body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 0 1em;
-    @media screen and (max-width: 50em) {
-      display: block;
-    }
-  }
-
-  .pure-control-group {
-    margin: 0.5em 0;
-  }
-
-  input {
+.wrapper {
+  width: 50em;
+  @media screen and (max-width: 50em) {
     width: 100%;
   }
+}
 
-  hr {
-    margin: 1em 0;
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1em;
+  @media screen and (max-width: 50em) {
+    display: block;
   }
+}
 
-  .button-large {
-    font-size: 110%;
-  }
+.pure-control-group {
+  margin: 0.5em 0;
+}
 
-  .button-success {
-    color: white;
-    border-radius: 4px;
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-    background: rgb(8, 171, 46);
-    width: 100%;
-  }
+input {
+  width: 100%;
+}
+
+hr {
+  margin: 1em 0;
+}
+
+.button-large {
+  font-size: 110%;
+}
+
+.button-success {
+  color: white;
+  border-radius: 4px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  background: rgb(8, 171, 46);
+  width: 100%;
+}
+
+.button-secondary {
+  color: white;
+  border-radius: 4px;
+  background: rgb(66, 184, 221);
+}
 </style>
