@@ -128,7 +128,7 @@ const websiteURL = computed(() =>
             :src="
               isCech
                 ? 'https://github.com/user-attachments/assets/96bbf802-b14a-405c-9aa5-e66f7822d10e'
-                : 'https://github.com/user-attachments/assets/f4ae1b2a-d009-4abd-a54d-f8d2e913c184'
+                : 'https://github.com/user-attachments/assets/e9ec2719-bd3b-4b80-9a95-779262a1d9e4'
             "
             width="220"
             style="background-color: white"
